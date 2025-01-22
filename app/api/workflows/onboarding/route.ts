@@ -1,3 +1,4 @@
+import WelcomeEmail from "@/emails/my-email";
 import { db } from "@/database/drizzle";
 import { users } from "@/database/schema";
 import { sendEmail } from "@/lib/workflow";
@@ -45,7 +46,7 @@ export const { POST } = serve<InitialData>(async (context) => {
     await sendEmail({
       email,
       subject: "Welcome to our platform",
-      message: `Hi ${fullName}, welcome to our platform!`,
+      react: WelcomeEmail({ name: fullName }),
     });
   });
 
@@ -61,7 +62,8 @@ export const { POST } = serve<InitialData>(async (context) => {
         await sendEmail({
           email,
           subject: "Are you still there",
-          message: `Hey ${fullName}, we miss you!`,
+          // message: `Hey ${fullName}, we miss you!`,
+          react: WelcomeEmail({ name: fullName }),
         });
       });
     } else if (state === "active") {
@@ -69,7 +71,8 @@ export const { POST } = serve<InitialData>(async (context) => {
         await sendEmail({
           email,
           subject: "Welcome back!",
-          message: `Welcome back ${fullName}!`,
+          // message: `Welcome back ${fullName}!`,
+          react: WelcomeEmail({ name: fullName }),
         });
       });
     }
